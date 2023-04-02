@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    FILE *fp1, *fp2;
+    char ch;
+    int count[26] = {0}, i;
+
+    fp1 = fopen("data.txt", "r");
+    if (fp1 == NULL)
+    {
+        printf("Error: Failed to open file.\n");
+        exit(1);
+    }
+
+    fp2 = fopen("statistics.txt", "w");
+    if (fp2 == NULL)
+    {
+        printf("Error: Failed to create file.\n");
+        exit(1);
+    }
+
+    while ((ch = fgetc(fp1)) != EOF)
+    {
+        if (ch >= 'a' && ch <= 'z')
+        {
+            count[ch - 'a']++;
+        }
+        else if (ch >= 'A' && ch <= 'Z')
+        {
+            count[ch - 'A']++;
+        }
+    }
+
+    for (i = 0; i < 26; i++)
+    {
+        fprintf(fp2, "%c: %d\n", 'a' + i, count[i]);
+    }
+
+    printf("Statistics generated successfully.\n");
+
+    fclose(fp1);
+    fclose(fp2);
+
+    return 0;
+}
