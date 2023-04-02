@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *data_file;
+    int data;
+   
+    data_file = fopen("data.bin", "rb");
+    if (data_file == NULL) {
+        printf("Error opening data file\n");
+        exit(1);
+    }
+    
+    printf("Data from binary file:\n");
+    while (fread(&data, sizeof(data), 1, data_file) == 1) {
+        printf("%d ", data);
+    }
+    fclose(data_file);
+    
+    return 0;
+}
